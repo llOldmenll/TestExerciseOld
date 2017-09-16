@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#243944</color>
+    <color name="colorPrimaryDark">#243944</color>
     <color name="colorAccent">#FF4081</color>
 
 
@@ -9,5 +9,11 @@
     <color name="tab_bg_unselected">#f9f9f9</color>
 
     <color name="tab_bottom_line">#778085</color>
+    <color name="tab_text_unselected">#e4e4e4</color>
+    <color name="tab_text_red">#e8473a</color>
+    <color name="tab_text_green">#4ab725</color>
+    <color name="tab_text_orange">#fd7701</color>
+
+    <color name="tab_text_selected">#243944</color>
 
 </resources>

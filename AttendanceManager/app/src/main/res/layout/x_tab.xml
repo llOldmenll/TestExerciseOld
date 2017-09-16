@@ -9,8 +9,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/imageView"
@@ -20,7 +20,7 @@
         app:layout_constraintVertical_bias="0.504">
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginEnd="4dp"
             android:layout_marginStart="4dp"
@@ -29,14 +29,16 @@
             android:src="@drawable/tab_x_selector" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:textColor="@drawable/tab_x_text_selector"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginEnd="4dp"
             android:layout_marginStart="4dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text="3"
-            android:textSize="30sp" />
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

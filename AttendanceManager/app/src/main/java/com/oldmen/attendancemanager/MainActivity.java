@@ -28,13 +28,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
         toolbarDate = (TextView) findViewById(R.id.toolbar_date);
-        unmarkedTabTitle = (TextView) findViewById(R.id.all_children_number);
-        unmarkedNumber = (TextView) findViewById(R.id.unmarked_children_number);
 
         String date = DateFormatter.changeFormat(System.currentTimeMillis());
         toolbarDate.setText(date);
 
-        View view = LayoutInflater.from(this).inflate(R.layout.unmarked_tab, null);
+        View unmarkedTab = LayoutInflater.from(this).inflate(R.layout.unmarked_tab, null);
+        View intimeTab = LayoutInflater.from(this).inflate(R.layout.intime_tab, null);
+        View lateTab = LayoutInflater.from(this).inflate(R.layout.late_tab, null);
+        View xTab = LayoutInflater.from(this).inflate(R.layout.x_tab, null);
 
         TabHost tabHost = (TabHost) findViewById(R.id.tab_host);
         tabHost.setup();
@@ -42,17 +43,22 @@ public class MainActivity extends AppCompatActivity {
         TabHost.TabSpec tabSpec = tabHost.newTabSpec("tag1");
 
         tabSpec.setContent(R.id.tab1);
-        tabSpec.setIndicator(view);
+        tabSpec.setIndicator(unmarkedTab);
         tabHost.addTab(tabSpec);
 
         tabSpec = tabHost.newTabSpec("tag2");
         tabSpec.setContent(R.id.tab2);
-        tabSpec.setIndicator("Кошка");
+        tabSpec.setIndicator(intimeTab);
         tabHost.addTab(tabSpec);
 
         tabSpec = tabHost.newTabSpec("tag3");
         tabSpec.setContent(R.id.tab3);
-        tabSpec.setIndicator("Котёнок");
+        tabSpec.setIndicator(lateTab);
+        tabHost.addTab(tabSpec);
+
+        tabSpec = tabHost.newTabSpec("tag4");
+        tabSpec.setContent(R.id.tab4);
+        tabSpec.setIndicator(xTab);
         tabHost.addTab(tabSpec);
 
         tabHost.setCurrentTab(0);
