@@ -3,8 +3,10 @@ package com.oldmen.attendancemanager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TabHost;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(null);
         }
 
+        View view = LayoutInflater.from(this).inflate(R.layout.unmarked_tab, null);
 
         TabHost tabHost = (TabHost) findViewById(R.id.tab_host);
 
@@ -30,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         TabHost.TabSpec tabSpec = tabHost.newTabSpec("tag1");
 
         tabSpec.setContent(R.id.tab1);
-        tabSpec.setIndicator("Кот");
+        tabSpec.setIndicator(view);
         tabHost.addTab(tabSpec);
 
         tabSpec = tabHost.newTabSpec("tag2");
