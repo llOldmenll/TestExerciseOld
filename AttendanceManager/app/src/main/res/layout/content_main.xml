@@ -32,53 +32,61 @@
 
                 <LinearLayout
                     android:id="@+id/tab1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <TextView
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/unmarked_children"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Tab 1" />
+                        android:layout_height="match_parent">
+
+                    </android.support.v7.widget.RecyclerView>
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/tab2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <TextView
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/checked_children"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Tab 2" />
+                        android:layout_height="match_parent">
+
+                    </android.support.v7.widget.RecyclerView>
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/tab3"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <TextView
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/late_children"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Tab 3" />
+                        android:layout_height="match_parent">
+
+                    </android.support.v7.widget.RecyclerView>
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/tab4"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <TextView
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/x_children"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Tab 4" />
+                        android:layout_height="match_parent">
+
+                    </android.support.v7.widget.RecyclerView>
 
                 </LinearLayout>
             </FrameLayout>

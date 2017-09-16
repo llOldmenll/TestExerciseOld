@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import com.oldmen.attendancemanager.utils.DateFormatter;
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView toolbarDate;
@@ -36,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
         View intimeTab = LayoutInflater.from(this).inflate(R.layout.intime_tab, null);
         View lateTab = LayoutInflater.from(this).inflate(R.layout.late_tab, null);
         View xTab = LayoutInflater.from(this).inflate(R.layout.x_tab, null);
+
+        unmarkedTabTitle = unmarkedTab.findViewById(R.id.all_children_number);
+        unmarkedNumber = unmarkedTab.findViewById(R.id.unmarked_children_number);
 
         TabHost tabHost = (TabHost) findViewById(R.id.tab_host);
         tabHost.setup();

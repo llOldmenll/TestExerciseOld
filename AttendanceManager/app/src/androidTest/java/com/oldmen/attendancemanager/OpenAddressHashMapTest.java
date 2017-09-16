@@ -4,6 +4,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.oldmen.attendancemanager.OpenAddressMap.OpenAddressHashMap;
+
 
 public class OpenAddressHashMapTest extends Assert {
     private final OpenAddressHashMap hashMap = new OpenAddressHashMap(500);

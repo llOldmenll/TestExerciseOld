@@ -1,4 +1,4 @@
-package com.oldmen.attendancemanager;
+package com.oldmen.attendancemanager.OpenAddressMap;
 
 
 public class OpenAddressHashMap {
