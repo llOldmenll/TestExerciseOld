@@ -2,4 +2,18 @@
     <string name="app_name">AttendanceManager</string>
     <string name="action_settings">Settings</string>
     <string name="today">TODAY</string>
+
+
+    <string-array name="students_name">
+        <item>John Smith</item>
+        <item>Mick Taylor</item>
+        <item>Richie Nordman</item>
+        <item>Mathew Ahart</item>
+        <item>Lyman Brashears</item>
+        <item>Sharie Gourlay</item>
+        <item>Vivien Aguillard</item>
+        <item>Alvina Runk</item>
+        <item>Henriette Stang</item>
+    </string-array>
+
 </resources>

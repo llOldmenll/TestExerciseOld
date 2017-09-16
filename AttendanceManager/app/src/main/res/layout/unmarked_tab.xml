@@ -20,7 +20,7 @@
         app:layout_constraintVertical_bias="0.504">
 
         <TextView
-            android:id="@+id/unmarked_children_number"
+            android:id="@+id/unmarked_students_number"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginEnd="2dp"
@@ -33,7 +33,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/all_children_number"
+            android:id="@+id/all_students_number"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginStart="2dp"

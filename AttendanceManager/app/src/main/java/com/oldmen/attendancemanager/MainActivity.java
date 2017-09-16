@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
         View lateTab = LayoutInflater.from(this).inflate(R.layout.late_tab, null);
         View xTab = LayoutInflater.from(this).inflate(R.layout.x_tab, null);
 
-        unmarkedTabTitle = unmarkedTab.findViewById(R.id.all_children_number);
-        unmarkedNumber = unmarkedTab.findViewById(R.id.unmarked_children_number);
+        unmarkedTabTitle = unmarkedTab.findViewById(R.id.all_students_number);
+        unmarkedNumber = unmarkedTab.findViewById(R.id.unmarked_students_number);
 
         TabHost tabHost = (TabHost) findViewById(R.id.tab_host);
         tabHost.setup();
