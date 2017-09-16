@@ -8,10 +8,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TabHost;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    private TextView toolbarDate;
+    private TextView unmarkedTabTitle;
+    private TextView unmarkedNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,10 +27,16 @@ public class MainActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(null);
         }
 
+        toolbarDate = (TextView) findViewById(R.id.toolbar_date);
+        unmarkedTabTitle = (TextView) findViewById(R.id.all_children_number);
+        unmarkedNumber = (TextView) findViewById(R.id.unmarked_children_number);
+
+        String date = DateFormatter.changeFormat(System.currentTimeMillis());
+        toolbarDate.setText(date);
+
         View view = LayoutInflater.from(this).inflate(R.layout.unmarked_tab, null);
 
         TabHost tabHost = (TabHost) findViewById(R.id.tab_host);
-
         tabHost.setup();
 
         TabHost.TabSpec tabSpec = tabHost.newTabSpec("tag1");

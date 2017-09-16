@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class DateFormatter {
 
-    private final static String DATE_FORM_FACTOR = "dd MMM yyyy HH:mm";
+    private final static String DATE_FORM_FACTOR = "EEEE, dd MMM yyyy ";
 
 
     public static String changeFormat(long milliSec){
