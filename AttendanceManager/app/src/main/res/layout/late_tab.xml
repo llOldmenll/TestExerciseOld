@@ -26,7 +26,7 @@
             android:layout_marginStart="4dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:src="@drawable/tab_intime_selector" />
+            android:src="@drawable/tab_late_selector" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -35,10 +35,11 @@
             android:layout_marginStart="4dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="13"
+            android:text="7"
             android:textSize="30sp" />
 
     </LinearLayout>
+
 
     <ImageView
         android:id="@+id/imageView"
