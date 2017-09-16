@@ -29,6 +29,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView toolbarDate;
     private TextView unmarkedTabTitle;
     private TextView unmarkedNumber;
+    private TextView intimeNumber;
+    private TextView latedNumber;
+    private TextView notCameNumber;
+
 
     private RecyclerView unmarkedRecycler;
     private RecyclerView intimeRecycler;
@@ -91,8 +95,12 @@ public class MainActivity extends AppCompatActivity {
 
         createtabHost();
 
-        unmarkedTabTitle = (TextView) tabHost.getTabWidget().findViewById(R.id.all_students_number);
-        unmarkedNumber = (TextView) tabHost.getTabWidget().findViewById(R.id.unmarked_students_number);
+        unmarkedTabTitle = tabHost.getTabWidget().findViewById(R.id.all_students_number);
+        unmarkedNumber = tabHost.getTabWidget().findViewById(R.id.unmarked_students_number);
+        intimeNumber = tabHost.getTabWidget().findViewById(R.id.intime_students_number);
+        latedNumber = tabHost.getTabWidget().findViewById(R.id.lated_students_number);
+        notCameNumber = tabHost.getTabWidget().findViewById(R.id.not_came_students_number);
+
 
         int unmarkedStdNumber = unmarkedStudents.size();
         int intimeStdNumber = intimeStudents.size();
@@ -103,10 +111,25 @@ public class MainActivity extends AppCompatActivity {
 
         unmarkedNumber.setText(String.valueOf(unmarkedStdNumber));
         unmarkedTabTitle.setText("out of " + String.valueOf(allStdNumber));
+        intimeNumber.setText(String.valueOf(intimeStdNumber));
+        latedNumber.setText(String.valueOf(latedStdNumber));
+        notCameNumber.setText(String.valueOf(notCameStdNumber));
 
         unmarkedRecycler.setLayoutManager(new LinearLayoutManager(this));
         unmarkedAdapter = new RecyclerAdapter(unmarkedStudents);
         unmarkedRecycler.setAdapter(unmarkedAdapter);
+
+        intimeRecycler.setLayoutManager(new LinearLayoutManager(this));
+        intimeAdapter = new RecyclerAdapter(intimeStudents);
+        intimeRecycler.setAdapter(intimeAdapter);
+
+        latedRecycler.setLayoutManager(new LinearLayoutManager(this));
+        latedAdapter = new RecyclerAdapter(latedStudents);
+        latedRecycler.setAdapter(latedAdapter);
+
+        notCameRecycler.setLayoutManager(new LinearLayoutManager(this));
+        notCameAdapter = new RecyclerAdapter(notCameStudents);
+        notCameRecycler.setAdapter(notCameAdapter);
     }
 
     @Override
@@ -151,53 +174,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void execute(Realm realm) {
 
-                Student std1 = realm.createObject(Student.class);
-                std1.setName(nameArray[0]);
-                std1.setImgId(imgIdArray[0]);
-                std1.setState(Const.UNMARKED);
-
-                Student std2 = realm.createObject(Student.class);
-                std2.setName(nameArray[1]);
-                std2.setImgId(imgIdArray[1]);
-                std2.setState(Const.UNMARKED);
-
-                Student std3 = realm.createObject(Student.class);
-                std3.setName(nameArray[2]);
-                std3.setImgId(imgIdArray[2]);
-                std3.setState(Const.UNMARKED);
-
-                Student std4 = realm.createObject(Student.class);
-                std4.setName(nameArray[3]);
-                std4.setImgId(imgIdArray[3]);
-                std4.setState(Const.UNMARKED);
-
-                Student std5 = realm.createObject(Student.class);
-                std5.setName(nameArray[4]);
-                std5.setImgId(imgIdArray[4]);
-                std5.setState(Const.UNMARKED);
-
-                Student std6 = realm.createObject(Student.class);
-                std6.setName(nameArray[5]);
-                std6.setImgId(imgIdArray[5]);
-                std6.setState(Const.UNMARKED);
-
-                Student std7 = realm.createObject(Student.class);
-                std7.setName(nameArray[6]);
-                std7.setImgId(imgIdArray[6]);
-                std7.setState(Const.UNMARKED);
-
-                Student std8 = realm.createObject(Student.class);
-                std8.setName(nameArray[7]);
-                std8.setImgId(imgIdArray[7]);
-                std8.setState(Const.UNMARKED);
-
-                Student std9 = realm.createObject(Student.class);
-                std9.setName(nameArray[8]);
-                std9.setImgId(imgIdArray[8]);
-                std9.setState(Const.UNMARKED);
-
-            }
-        });
+                for (int i = 0; i < 9; i ++){
+                    Student std1 = realm.createObject(Student.class);
+                    std1.setName(nameArray[i]);
+                    std1.setImgId(imgIdArray[i]);
+                    std1.setState(Const.UNMARKED);
+                }
+            }});
 
     }
 

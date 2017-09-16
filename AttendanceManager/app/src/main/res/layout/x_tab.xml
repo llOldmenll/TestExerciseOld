@@ -29,6 +29,7 @@
             android:src="@drawable/tab_x_selector" />
 
         <TextView
+            android:id="@+id/not_came_students_number"
             android:textColor="@drawable/tab_x_text_selector"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -36,7 +37,7 @@
             android:layout_marginStart="4dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="3"
+            android:text="0"
             android:textSize="24sp"
             android:textStyle="bold" />
 
