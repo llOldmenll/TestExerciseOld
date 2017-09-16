@@ -37,7 +37,7 @@
                     android:orientation="vertical">
 
                     <android.support.v7.widget.RecyclerView
-                        android:id="@+id/unmarked_children"
+                        android:id="@+id/unmarked_students"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
@@ -52,7 +52,7 @@
                     android:orientation="vertical">
 
                     <android.support.v7.widget.RecyclerView
-                        android:id="@+id/checked_children"
+                        android:id="@+id/intime_students"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
@@ -67,7 +67,7 @@
                     android:orientation="vertical">
 
                     <android.support.v7.widget.RecyclerView
-                        android:id="@+id/late_children"
+                        android:id="@+id/lated_students"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
@@ -82,7 +82,7 @@
                     android:orientation="vertical">
 
                     <android.support.v7.widget.RecyclerView
-                        android:id="@+id/x_children"
+                        android:id="@+id/not_came_students"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 

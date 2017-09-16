@@ -1,11 +1,23 @@
 package com.oldmen.attendancemanager;
 
 
-public class Student {
+import io.realm.RealmObject;
+
+public class Student extends RealmObject {
 
     private String name;
     private int imgId;
+    private String state;
 
+
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
 
     public String getName() {
         return name;
