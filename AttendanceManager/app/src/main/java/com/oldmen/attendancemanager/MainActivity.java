@@ -1,5 +1,6 @@
 package com.oldmen.attendancemanager;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -90,5 +91,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void addStudentsToDatabase(){
+
+        Resources res = getResources();
+        String[] categoriesArray = res.getStringArray(R.array.students_names);
+
+
     }
 }

@@ -4,7 +4,7 @@
     <string name="today">TODAY</string>
 
 
-    <string-array name="students_name">
+    <string-array name="students_names">
         <item>John Smith</item>
         <item>Mick Taylor</item>
         <item>Richie Nordman</item>
