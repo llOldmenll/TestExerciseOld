@@ -16,4 +16,8 @@
 
     <color name="tab_text_selected">#243944</color>
 
+    <color name="item_background_unselected">#fdfdfe</color>
+    <color name="item_background_selected">#eaeaed</color>
+
+
 </resources>

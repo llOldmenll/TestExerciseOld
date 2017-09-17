@@ -1,11 +1,17 @@
 package com.oldmen.attendancemanager;
 
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,7 +26,7 @@ import java.util.UUID;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-public class MainActivity extends AppCompatActivity implements StudentStatusChange{
+public class MainActivity extends AppCompatActivity implements StudentStatusChange {
 
     private TabHost tabHost;
     private View unmarkedTab;
@@ -51,6 +57,30 @@ public class MainActivity extends AppCompatActivity implements StudentStatusChan
     private RealmResults<Student> intimeStudents;
     private RealmResults<Student> latedStudents;
     private RealmResults<Student> notCameStudents;
+
+    private Paint p = new Paint();
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,20 +132,6 @@ public class MainActivity extends AppCompatActivity implements StudentStatusChan
         latedNumber = tabHost.getTabWidget().findViewById(R.id.lated_students_number);
         notCameNumber = tabHost.getTabWidget().findViewById(R.id.not_came_students_number);
 
-
-//        int unmarkedStdNumber = unmarkedStudents.size();
-//        int intimeStdNumber = intimeStudents.size();
-//        int latedStdNumber = latedStudents.size();
-//        int notCameStdNumber = notCameStudents.size();
-//        int allStdNumber = unmarkedStdNumber + intimeStdNumber
-//                + latedStdNumber + notCameStdNumber;
-//
-//        unmarkedNumber.setText(String.valueOf(unmarkedStdNumber));
-//        unmarkedTabTitle.setText("out of " + String.valueOf(allStdNumber));
-//        intimeNumber.setText(String.valueOf(intimeStdNumber));
-//        latedNumber.setText(String.valueOf(latedStdNumber));
-//        notCameNumber.setText(String.valueOf(notCameStdNumber));
-
         updateTabsTitle();
 
         unmarkedRecycler.setLayoutManager(new LinearLayoutManager(this));
@@ -133,29 +149,10 @@ public class MainActivity extends AppCompatActivity implements StudentStatusChan
         notCameRecycler.setLayoutManager(new LinearLayoutManager(this));
         notCameAdapter = new RecyclerAdapter(notCameStudents);
         notCameRecycler.setAdapter(notCameAdapter);
+
+        attachItemTouchHelper(unmarkedAdapter, unmarkedRecycler);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     private void addStudentsToDatabase() {
 
@@ -234,6 +231,58 @@ public class MainActivity extends AppCompatActivity implements StudentStatusChan
         String uuid = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
 
         return name + uuid;
+    }
+
+    private void attachItemTouchHelper(final RecyclerAdapter adapter, RecyclerView recycler){
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+
+                if (direction == ItemTouchHelper.LEFT){
+                    adapter.changeItemState(Const.NOT_CAME, position);
+                } else {
+                    adapter.changeItemState(Const.IN_TIME, position);
+                }
+            }
+
+            @Override
+            public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+
+                Bitmap icon;
+                if(actionState == ItemTouchHelper.ACTION_STATE_SWIPE){
+
+                    View itemView = viewHolder.itemView;
+                    float height = (float) itemView.getBottom() - (float) itemView.getTop();
+                    float width = height / 3;
+
+                    if(dX > 0){
+                        p.setColor(getResources().getColor(R.color.tab_text_green));
+                        RectF background = new RectF((float) itemView.getLeft(), (float) itemView.getTop(), dX,(float) itemView.getBottom());
+                        c.drawRect(background,p);
+                        icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_check_white);
+                        RectF icon_dest = new RectF((float) itemView.getLeft() + width ,(float) itemView.getTop() + width,(float) itemView.getLeft()+ 2*width,(float)itemView.getBottom() - width);
+                        c.drawBitmap(icon,null,icon_dest,p);
+                    } else {
+                        p.setColor(getResources().getColor(R.color.tab_text_red));
+                        RectF background = new RectF((float) itemView.getRight() + dX, (float) itemView.getTop(),(float) itemView.getRight(), (float) itemView.getBottom());
+                        c.drawRect(background,p);
+                        icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_x_white);
+                        RectF icon_dest = new RectF((float) itemView.getRight() - 2*width ,(float) itemView.getTop() + width,(float) itemView.getRight() - width,(float)itemView.getBottom() - width);
+                        c.drawBitmap(icon,null,icon_dest,p);
+                    }
+                }
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+            }
+        };
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(recycler);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.oldmen.attendancemanager;
 
+import android.animation.Animator;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
 import io.realm.RealmResults;
@@ -47,17 +50,34 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
         return new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                try {
-                    stdStatusInterface.onStatusChanged(students.get(position), newState);
-                    notifyItemRemoved(position);
-                    notifyItemRangeChanged(position, getItemCount());
-                }catch (ArrayIndexOutOfBoundsException e){
-                    e.printStackTrace();
-                }
+            public void onClick(final View view) {
+
+                YoYo.with(Techniques.Landing)
+                        .duration(250)
+                        .onStart(new YoYo.AnimatorCallback() {
+                            @Override
+                            public void call(Animator animator) {
+                                if (view.isFocusable())
+                                    changeItemState(newState, position);
+                                else
+                                    changeItemState(Const.UNMARKED, position);
+                            }
+                        })
+                        .playOn(view);
             }
         };
     }
+
+    public void changeItemState(String newState, int position) {
+        try {
+            stdStatusInterface.onStatusChanged(students.get(position), newState);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, getItemCount());
+        } catch (ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     class RecyclerHolder extends RecyclerView.ViewHolder {
 
@@ -76,6 +96,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
             btnLated = itemView.findViewById(R.id.lated_btn_item);
             btnNotCame = itemView.findViewById(R.id.not_came_btn_item);
         }
+
 
         void bindView(Student std) {
 
