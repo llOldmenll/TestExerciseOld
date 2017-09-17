@@ -1,10 +1,12 @@
-package com.oldmen.attendancemanager;
+package com.oldmen.attendancemanager.utils;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import com.oldmen.attendancemanager.R;
 
 public class SimpleDividerItemDecoration extends RecyclerView.ItemDecoration  {
 
@@ -30,6 +32,7 @@ public class SimpleDividerItemDecoration extends RecyclerView.ItemDecoration  {
 
             mDivider.setBounds(left, top, right, bottom);
             mDivider.draw(c);
+
         }
     }
 

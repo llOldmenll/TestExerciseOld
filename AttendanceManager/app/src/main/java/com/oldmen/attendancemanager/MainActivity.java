@@ -1,5 +1,6 @@
 package com.oldmen.attendancemanager;
 
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -20,6 +22,8 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.oldmen.attendancemanager.utils.DateFormatter;
+import com.oldmen.attendancemanager.utils.GridDividerItemDecoration;
+import com.oldmen.attendancemanager.utils.SimpleDividerItemDecoration;
 
 import java.util.UUID;
 
@@ -59,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements StudentStatusChan
     private RealmResults<Student> notCameStudents;
 
     private Paint p = new Paint();
+    private boolean isPortrait;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -97,6 +102,8 @@ public class MainActivity extends AppCompatActivity implements StudentStatusChan
         String date = DateFormatter.changeFormat(System.currentTimeMillis());
         toolbarDate.setText(date);
 
+        isPortrait = getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
+
         realm = Realm.getDefaultInstance();
 
         if (realm.where(Student.class).findAll().size() == 0)
@@ -114,13 +121,21 @@ public class MainActivity extends AppCompatActivity implements StudentStatusChan
         notCameTab = LayoutInflater.from(this).inflate(R.layout.x_tab, null);
 
         unmarkedRecycler = (RecyclerView) findViewById(R.id.unmarked_students);
-        unmarkedRecycler.addItemDecoration(new SimpleDividerItemDecoration(this));
+        unmarkedRecycler.addItemDecoration(isPortrait
+                ? new SimpleDividerItemDecoration(this)
+                : new GridDividerItemDecoration(3));
         intimeRecycler = (RecyclerView) findViewById(R.id.intime_students);
-        intimeRecycler.addItemDecoration(new SimpleDividerItemDecoration(this));
+        intimeRecycler.addItemDecoration(isPortrait
+                ? new SimpleDividerItemDecoration(this)
+                : new GridDividerItemDecoration(3));
         latedRecycler = (RecyclerView) findViewById(R.id.lated_students);
-        latedRecycler.addItemDecoration(new SimpleDividerItemDecoration(this));
+        latedRecycler.addItemDecoration(isPortrait
+                ? new SimpleDividerItemDecoration(this)
+                : new GridDividerItemDecoration(3));
         notCameRecycler = (RecyclerView) findViewById(R.id.not_came_students);
-        notCameRecycler.addItemDecoration(new SimpleDividerItemDecoration(this));
+        notCameRecycler.addItemDecoration(isPortrait
+                ? new SimpleDividerItemDecoration(this)
+                : new GridDividerItemDecoration(3));
 
         tabHost = (TabHost) findViewById(R.id.tab_host);
         tabHost.setup();
@@ -134,19 +149,19 @@ public class MainActivity extends AppCompatActivity implements StudentStatusChan
 
         updateTabsTitle();
 
-        unmarkedRecycler.setLayoutManager(new LinearLayoutManager(this));
+        unmarkedRecycler.setLayoutManager(isPortrait ? new LinearLayoutManager(this) : new GridLayoutManager(this, 2));
         unmarkedAdapter = new RecyclerAdapter(unmarkedStudents);
         unmarkedRecycler.setAdapter(unmarkedAdapter);
 
-        intimeRecycler.setLayoutManager(new LinearLayoutManager(this));
+        intimeRecycler.setLayoutManager(isPortrait ? new LinearLayoutManager(this) : new GridLayoutManager(this, 2));
         intimeAdapter = new RecyclerAdapter(intimeStudents);
         intimeRecycler.setAdapter(intimeAdapter);
 
-        latedRecycler.setLayoutManager(new LinearLayoutManager(this));
+        latedRecycler.setLayoutManager(isPortrait ? new LinearLayoutManager(this) : new GridLayoutManager(this, 2));
         latedAdapter = new RecyclerAdapter(latedStudents);
         latedRecycler.setAdapter(latedAdapter);
 
-        notCameRecycler.setLayoutManager(new LinearLayoutManager(this));
+        notCameRecycler.setLayoutManager(isPortrait ? new LinearLayoutManager(this) : new GridLayoutManager(this, 2));
         notCameAdapter = new RecyclerAdapter(notCameStudents);
         notCameRecycler.setAdapter(notCameAdapter);
 
