@@ -2,14 +2,26 @@ package com.oldmen.attendancemanager;
 
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.Required;
 
 public class Student extends RealmObject {
 
+    @PrimaryKey
+    @Required
+    private String studentId;
     private String name;
     private int imgId;
     private String state;
 
 
+    public String getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
+    }
 
     public String getState() {
         return state;
@@ -34,4 +46,6 @@ public class Student extends RealmObject {
     public void setImgId(int imgId) {
         this.imgId = imgId;
     }
+
+
 }

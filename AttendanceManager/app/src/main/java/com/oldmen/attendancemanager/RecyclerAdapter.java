@@ -14,6 +14,7 @@ import io.realm.RealmResults;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerHolder> {
 
     private RealmResults<Student> students;
+    private StudentStatusChange stdStatusInterface;
 
     public RecyclerAdapter(RealmResults<Student> students) {
         this.students = students;
@@ -21,6 +22,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
     @Override
     public RecyclerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        stdStatusInterface = (StudentStatusChange) parent.getContext();
+
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.recycler_item, parent, false);
         return new RecyclerHolder(view);
@@ -29,6 +32,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     @Override
     public void onBindViewHolder(RecyclerHolder holder, int position) {
         holder.bindView(students.get(position));
+
+        holder.btnIntime.setOnClickListener(createListener(Const.IN_TIME, position));
+        holder.btnLated.setOnClickListener(createListener(Const.LATED, position));
+        holder.btnNotCame.setOnClickListener(createListener(Const.NOT_CAME, position));
     }
 
     @Override
@@ -36,9 +43,23 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         return students.size();
     }
 
+    private View.OnClickListener createListener(final String newState, final int position) {
 
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    stdStatusInterface.onStatusChanged(students.get(position), newState);
+                    notifyItemRemoved(position);
+                    notifyDataSetChanged();
+                }catch (ArrayIndexOutOfBoundsException e){
+                    e.printStackTrace();
+                }
+            }
+        };
+    }
 
-    class RecyclerHolder extends RecyclerView.ViewHolder{
+    class RecyclerHolder extends RecyclerView.ViewHolder {
 
         private TextView studentName;
         private CircularImageView studentImage;
@@ -56,12 +77,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
             btnNotCame = itemView.findViewById(R.id.not_came_btn_item);
         }
 
-        void bindView (Student std){
+        void bindView(Student std) {
 
             studentName.setText(std.getName());
             studentImage.setImageResource(std.getImgId());
 
-            switch (std.getState()){
+            switch (std.getState()) {
 
                 case Const.UNMARKED:
                     btnIntime.setImageResource(R.drawable.ic_check_grey);

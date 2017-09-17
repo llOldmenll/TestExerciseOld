@@ -15,10 +15,12 @@ import android.widget.TextView;
 
 import com.oldmen.attendancemanager.utils.DateFormatter;
 
+import java.util.UUID;
+
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements StudentStatusChange{
 
     private TabHost tabHost;
     private View unmarkedTab;
@@ -92,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
 
         tabHost = (TabHost) findViewById(R.id.tab_host);
         tabHost.setup();
-
         createtabHost();
 
         unmarkedTabTitle = tabHost.getTabWidget().findViewById(R.id.all_students_number);
@@ -102,18 +103,20 @@ public class MainActivity extends AppCompatActivity {
         notCameNumber = tabHost.getTabWidget().findViewById(R.id.not_came_students_number);
 
 
-        int unmarkedStdNumber = unmarkedStudents.size();
-        int intimeStdNumber = intimeStudents.size();
-        int latedStdNumber = latedStudents.size();
-        int notCameStdNumber = notCameStudents.size();
-        int allStdNumber = unmarkedStdNumber + intimeStdNumber
-                + latedStdNumber + notCameStdNumber;
+//        int unmarkedStdNumber = unmarkedStudents.size();
+//        int intimeStdNumber = intimeStudents.size();
+//        int latedStdNumber = latedStudents.size();
+//        int notCameStdNumber = notCameStudents.size();
+//        int allStdNumber = unmarkedStdNumber + intimeStdNumber
+//                + latedStdNumber + notCameStdNumber;
+//
+//        unmarkedNumber.setText(String.valueOf(unmarkedStdNumber));
+//        unmarkedTabTitle.setText("out of " + String.valueOf(allStdNumber));
+//        intimeNumber.setText(String.valueOf(intimeStdNumber));
+//        latedNumber.setText(String.valueOf(latedStdNumber));
+//        notCameNumber.setText(String.valueOf(notCameStdNumber));
 
-        unmarkedNumber.setText(String.valueOf(unmarkedStdNumber));
-        unmarkedTabTitle.setText("out of " + String.valueOf(allStdNumber));
-        intimeNumber.setText(String.valueOf(intimeStdNumber));
-        latedNumber.setText(String.valueOf(latedStdNumber));
-        notCameNumber.setText(String.valueOf(notCameStdNumber));
+        updateTabsTitle();
 
         unmarkedRecycler.setLayoutManager(new LinearLayoutManager(this));
         unmarkedAdapter = new RecyclerAdapter(unmarkedStudents);
@@ -175,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
             public void execute(Realm realm) {
 
                 for (int i = 0; i < 9; i ++){
-                    Student std1 = realm.createObject(Student.class);
+                    Student std1 = realm.createObject(Student.class, getUniqueId(nameArray[i]));
                     std1.setName(nameArray[i]);
                     std1.setImgId(imgIdArray[i]);
                     std1.setState(Const.UNMARKED);
@@ -210,4 +213,51 @@ public class MainActivity extends AppCompatActivity {
 
         tabHost.setCurrentTab(0);
     }
+
+    private void updateTabsTitle(){
+        int unmarkedStdNumber = unmarkedStudents.size();
+        int intimeStdNumber = intimeStudents.size();
+        int latedStdNumber = latedStudents.size();
+        int notCameStdNumber = notCameStudents.size();
+        int allStdNumber = unmarkedStdNumber + intimeStdNumber
+                + latedStdNumber + notCameStdNumber;
+
+        unmarkedNumber.setText(String.valueOf(unmarkedStdNumber));
+        unmarkedTabTitle.setText("out of " + String.valueOf(allStdNumber));
+        intimeNumber.setText(String.valueOf(intimeStdNumber));
+        latedNumber.setText(String.valueOf(latedStdNumber));
+        notCameNumber.setText(String.valueOf(notCameStdNumber));
+    }
+
+    private String getUniqueId(String studentName){
+        String name = studentName.replace(" ", "");
+        String uuid = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
+
+        return name + uuid;
+    }
+
+    @Override
+    public void onStatusChanged(Student std, String newStatus) {
+
+        realm.beginTransaction();
+        std.setState(newStatus);
+        realm.commitTransaction();
+
+        unmarkedAdapter.notifyDataSetChanged();
+        switch (newStatus){
+            case Const.IN_TIME:
+                intimeAdapter.notifyDataSetChanged();
+                break;
+            case Const.LATED:
+                latedAdapter.notifyDataSetChanged();
+                break;
+            case Const.NOT_CAME:
+                notCameAdapter.notifyDataSetChanged();
+                break;
+        }
+
+        updateTabsTitle();
+
+    }
+
 }
