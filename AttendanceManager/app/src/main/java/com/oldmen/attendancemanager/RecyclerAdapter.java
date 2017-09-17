@@ -51,7 +51,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
                 try {
                     stdStatusInterface.onStatusChanged(students.get(position), newState);
                     notifyItemRemoved(position);
-                    notifyDataSetChanged();
+                    notifyItemRangeChanged(position, getItemCount());
                 }catch (ArrayIndexOutOfBoundsException e){
                     e.printStackTrace();
                 }
